@@ -48,3 +48,60 @@ Cypress.Commands.add('resetData', () => {
   cy.get(loc.SETTINGS.RESET).click()
   cy.xpath(loc.FN_XP_CLOSE_MESSAGE('Dados resetados com sucesso!')).click()
 })
+
+Cypress.Commands.add('resetViaRest', token => {
+  cy.request({
+    method: 'GET',
+    url: '/reset',
+    headers: { Authorization: `JWT ${token}` }
+  }).its('status').should('be.equal', 200)
+})
+
+Cypress.Commands.add('getToken', (login, password) => {
+  cy.request({
+    method: 'POST',
+    url: '/signin',
+    body: { email: login, senha: password, redirecionar: false }
+  }).its('body.token').should('not.be.empty')
+      .then(token => {
+        Cypress.env('token', token)
+        return token
+      })
+})
+
+Cypress.Commands.add('getIdConta', (conta) => {
+  cy.getToken('jarbas.junior@email.com', '123456').then(token => {
+    cy.request({
+      method: 'GET',
+      url: '/contas',
+      headers: { Authorization: `JWT ${token}` },
+      qs: { name: conta }
+    }).then(res => {
+      return res.body[0].id
+    })
+  })
+})
+
+Cypress.Commands.add('getTransacao', (conta) => {
+  cy.getToken('jarbas.junior@email.com', '123456').then(token => {
+    cy.request({
+      url: 'transacoes',
+      method: 'GET',
+      headers: { Authorization: `JWT ${token}` },
+      qs: { descricao: conta }
+    }).then(res => {
+      return res.body[0]
+    })
+  })
+})
+
+Cypress.Commands.overwrite('request', (originalFn, ...options) => {
+  if(options.length === 1) {
+    if(Cypress.env('token')) {
+      options[0].headers = {
+        Authorization: `JWT ${Cypress.env('token')}`
+      }
+    }
+  }
+  return originalFn(...options)
+})
