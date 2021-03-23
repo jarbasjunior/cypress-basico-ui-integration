@@ -40,6 +40,7 @@ const locators = {
     FN_XP_REGISTRO: (conta, valor) => `//span[text()='${conta}']/following-sibling::small[contains(.,'${valor}')]`,
     FN_XP_EXCLUIR_REGISTRO: conta => `//span[text()='${conta}']/../../..//i[@class='far fa-trash-alt']`,
     FN_XP_ALTERAR_REGISTRO: conta => `//span[text()='${conta}']/../../..//a`,
+    FN_XP_LINHA: descricao => `//span[text()='${descricao}']/../../../..`,
     FN_XP_NOME_REGISTRO: conta => `//span[text()='${conta}']`
   },
 

@@ -33,10 +33,10 @@ Cypress.Commands.add('clickAlert', (locator, message) => {
     })
 })
 
-Cypress.Commands.add('login', (user, password) => {
-  const welcomeMessage = 'Bem vindo, Jarbas Junior!'
+Cypress.Commands.add('login', (name, user, password) => {
+  const welcomeMessage = `Bem vindo, ${name}!`
   cy.visit('https://barrigareact.wcaquino.me')
-  cy.get(loc.LOGIN.USER).type(user)
+  cy.get(loc.LOGIN.USER).type(`${user}@email.com`)
   cy.get(loc.LOGIN.PASSWORD).type(password)
   cy.get(loc.LOGIN.BTN).click()
   cy.xpath(loc.FN_XP_MESSAGE(welcomeMessage)).should('exist')

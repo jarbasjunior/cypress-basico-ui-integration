@@ -7,7 +7,7 @@ import '../support/commandsContaMovimentacao'
 
 describe('Should test at a funcional nivel', () => {
   before(() => {
-    cy.login('jarbas.junior@email.com', '123456')
+    cy.login('Jarbas Junior', 'jarbas.junior', '123456')
   })
 
   beforeEach(() => {
