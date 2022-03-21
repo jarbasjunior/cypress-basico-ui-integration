@@ -1,4 +1,4 @@
-# Cypress Comandos Básicos
+# Cypress Testes de Integração e UI
 
   Projeto com alguns exemplos de comandos básicos do cypress, baseados no curso [Testes de aplicações modernas com Cypress](https://www.udemy.com/course/testes-cypress) do professor [Wagner Aquino](http://www.wcaquino.me).
 
